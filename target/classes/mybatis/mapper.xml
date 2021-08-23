@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.book.mapper.BookMapper">
+
+    <!--查询所有的方法-->
+    <select id="getAllBook" resultType="com.example.book.entity.Book">
+        select * from booktest
+    </select>
+
+    <select id="findBookById" parameterType="int" resultType="com.example.book.entity.Book">
+        select * from booktest where id=#{id}
+    </select>
+
+    <select id="selectPage" resultType="com.example.book.entity.Book">
+        select * from booktest
+    </select>
+
+<!--    <select id="selectBookPage" resultType="com.example.book.entity.Book">-->
+<!--        SELECT * FROM booktest WHERE state=#{state}-->
+<!--    </select>-->
+
+    <!--插入数据-->
+    <insert id="insertBook" parameterType="com.example.book.entity.Book">
+        insert into booktest(book_name,book_author,book_press, create_time,only_read) values (#{bookName},#{bookAuthor},#{bookPress},#{createTime},#{onlyRead})
+    </insert>
+    <!--删除-->
+    <delete id="delete" parameterType="int">
+        delete from booktest where id=#{id}
+    </delete>
+
+    <!--批量删除-->
+    <delete id="deleteBatch" parameterType="java.util.Arrays">
+        delete from booktest where id in
+        <foreach collection="array" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!--更新-->
+    <update id="update" parameterType="com.example.book.entity.Book">
+        update booktest set book_name=#{bookName},book_author=#{bookAuthor}, book_press=#{bookPress},create_time=#{createTime},only_read=#{onlyRead} where id=#{id}
+    </update>
+
+</mapper>
